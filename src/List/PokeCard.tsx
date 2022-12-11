@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MarkChip } from "../Common/MarkChip";
 import { PokeNameChip } from "../Common/PokeNameChip";
 import { fetchPokemonDetail, PokemonDetailOutputType } from "../Service/pokemonService";
+import { RootState } from "../Store";
 
 interface PokeCardProps {
     name: string;
@@ -11,6 +13,7 @@ interface PokeCardProps {
 
 export const PokeCard = (props: PokeCardProps) => {
     const navi = useNavigate();
+    const imageType = useSelector((state: RootState) => state.imageType.type);
     const [pokemon, setPokemon] = useState<PokemonDetailOutputType | null>(null)
 
     const handleClick = () => {
@@ -34,7 +37,7 @@ export const PokeCard = (props: PokeCardProps) => {
                 <PokeNameChip name={pokemon.krName} color={pokemon.color} id={pokemon.id}></PokeNameChip>
             </Header>
             <Body>
-                <Image src={pokemon.image.dreamWorldFront} alt={pokemon.name}></Image>
+                <Image src={pokemon.image[imageType]} alt={pokemon.name}></Image>
             </Body>
             <Footer>
                 <MarkChip />
@@ -88,3 +91,7 @@ const Footer = styled.section`
     display: flex;
     flex-direction: row;
 `
+
+function useSeletor(arg0: (state: RootState) => any) {
+    throw new Error("Function not implemented.");
+}

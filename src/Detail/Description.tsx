@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { MarkChip } from "../Common/MarkChip";
 import { fetchPokemonDetail, PokemonDetailOutputType } from "../Service/pokemonService";
+import { RootState } from "../Store";
 
 export const Description = () => {
     const { name } = useParams();
+    const imageType = useSelector((state: RootState) => state.imageType.type);
     const [pokemon, setPokemon] = useState<PokemonDetailOutputType | null>(null)
-
 
     useEffect(() => {
         if (!name) return;
@@ -23,7 +25,7 @@ export const Description = () => {
     return (
         <Container>
             <ImgContainer>
-                <Image src={pokemon.image.dreamWorldFront} alt={pokemon.krName} />
+                <Image src={pokemon.image[imageType]} alt={pokemon.krName} />
             </ImgContainer>
             <Divider />
             <Body >
